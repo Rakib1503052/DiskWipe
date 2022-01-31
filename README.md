@@ -37,3 +37,13 @@ CAN enter a folder path but it would still wipe the entire free space of the roo
 directory, you'll see the total, free and write-available space on the directory. Enter 'y' or 'Y' to continue. 
 Enter the number of passes you want to make. For solid state memory, 1 pass is enough. For HDD, at least 2 passes
 is recommended. Of course, the more the merrier. Now, wait till the wiping is done.
+_________________________________________________________________________________________________________________
+
+# Regarding setup files
+The "DiskWipeSetup" folder includes the setup files for Windows. Download and run "setup.exe" to install. Then run.
+
+Note: Requires Micorsoft Visual C++ Redistributable.
+Download from here https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
+
+(Yeah, sue me. I used VS2022 because CodeBlocks MinGW has a buggy header and I didn't want to setup msys2 for this. If MinGW 
+releases a new version for CodeBlocks, I'll rebuild it.)

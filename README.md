@@ -32,7 +32,7 @@ The built binary should work independently.
 _________________________________________________________________________________________________________________
 
 # Usage instruction
-Run the executable ("DiskWipe.exe"), preferable from a usb drive. Enter the root directory to wipe. Note that you
+Run the executable ("DiskWipe.exe"), preferably from a usb drive. Enter the root directory to wipe. Note that you
 CAN enter a folder path but it would still wipe the entire free space of the root directory. After inputting root
 directory, you'll see the total, free and write-available space on the directory. Enter 'y' or 'Y' to continue. 
 Enter the number of passes you want to make. For solid state memory, 1 pass is enough. For HDD, at least 2 passes

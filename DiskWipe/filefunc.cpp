@@ -1,42 +1,42 @@
 #include "header.h"
-#include <fstream>
-#include <bitset>
 
 using namespace std;
 
-string filemake(const string& dir, const size_t& space, const char& fill, const int& curpass)
+string filemake(const string& dir, const size_t& space, const unsigned char& fillbit, const int& curpass)
 {
-	string filename = dir + "wipe.tmp";
-	ofstream FILE;
-	FILE.open(filename);
-	double progress = 0.0;
-	double printflag = -1.0;
-	
-	bitset<8> fillbit(fill);
-	std::cout << std::setprecision(2) << std::fixed;
+	string filename = dir + "diskwipetempfile";
+
+	while(filesystem::exists(filename))
+    {
+        filename += "1";
+    }
+
+    FILE *fp = fopen(filename.c_str(), "wb");
+	int progress = 0;
+
+    unsigned char fillbits[CLUSTERSIZE];
+    memset((void*)&fillbits[0], fillbit ,CLUSTERSIZE);
 
 	for(size_t i = 0; i < space;)
 	{
 		if ((space - i) > CLUSTERSIZE)
 		{
-			FILE << string(CLUSTERSIZE, fill);
+			fwrite(&fillbits[0], sizeof(unsigned char), CLUSTERSIZE, fp);
 			i += CLUSTERSIZE;
 		}
 		else
 		{
-			FILE << string((space - i), fill);
+            unsigned char fillbitsN[space-i];
+            memset((void*)&fillbitsN[0], fillbit, space-i);
+			fwrite(&fillbitsN[0], sizeof(unsigned char), (space-i), fp);
 			i += CLUSTERSIZE;
 		}
-		progress = double(i) / double(space) * 100;
-		if (progress >= (printflag + 0.01))
-		{
-			system("cls");
-			cout << "Pass " << curpass << ": Fill '" << fillbit << "': Progress " << progress << "%" << endl;
-			printflag = progress;
-		}
+
+		progress = i * 100 / space;
+        printf("\rPass: %d, Progress: %d%%", curpass, progress);
 	}
 
-	FILE.close();
+	fclose(fp);
 
 	return filename;
 }

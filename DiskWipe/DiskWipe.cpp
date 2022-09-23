@@ -5,37 +5,73 @@ using namespace std;
 int main()
 {
 start:
-	system("cls");
-	string dir;
-	cout << "Enter directory: ";
-	cin >> dir;
+    system("cls");
+    string dir;
+    cout << "Enter directory (eg: \'C:/\'): ";
+    cin >> dir;
+    dir = dir[dir.size()-1] == '/' ? dir : dir+"/";
 
-	map<string, size_t> spaceInfo = space_inquiry(dir);
-	
-	cout << "Total space:\t" << spaceInfo["capacity"] << "bytes" << endl;
-	cout << "Free space:\t" << spaceInfo["free"] << "bytes" << endl;
-	cout << "Available space:\t" << spaceInfo["available"] << "bytes" << endl;
+    char choice;
+    unsigned int passNo;
 
-	cout << "Proceed to wipe free space (Y/N)? ";
-	char choice;
-	int passNo;
+    error_code ec;
+    filesystem::space_info spaceInfo;
+
+    if(space_inquiry(dir,ec, spaceInfo))
+    {
+        if(ec.value() == 0)
+        {
+            cout << "Total space:\t" << spaceInfo.capacity << " bytes" << endl;
+            cout << "Free space:\t" << spaceInfo.free << " bytes" << endl;
+            cout << "Available space:\t" << spaceInfo.available << " bytes" << endl;
+
+            cout << "Proceed to wipe free space (Y/N)? ";
 choices:
-	cin >> choice;
+            cin >> choice;
 
-	if (choice == 'n' || choice == 'N') { goto start; }
-	else if (choice == 'y' || choice == 'Y')
-	{
-	passIn:
-		cout << "Enter number of passes (0 to return): ";
-		cin >> passNo;
-		if (passNo < 0) { cout << "Invalid input." << endl; goto passIn; }
-		else if (passNo == 0) { goto start; }
-		else { wiper(dir, spaceInfo["free"], passNo); }
-	}
-	else { cout << "Invalid input. (Y/N)? "; goto choices; }
+            if (choice == 'n' || choice == 'N')
+            {
+                goto start;
+            }
+            else if (choice == 'y' || choice == 'Y')
+            {
+                cout << "Enter number of passes (0 to return/cancel): ";
+                cin >> passNo;
 
-	cout << "Wipe another directory (Y/N)? ";
-	cin >> choice;
-	if (choice == 'n' || choice == 'N') { goto start; }
-	else { return 1; }
+                if (passNo == 0)
+                {
+                    goto start;
+                }
+                else
+                {
+                    wiper(dir, spaceInfo.available, passNo);
+                }
+            }
+            else
+            {
+                cout << "Invalid input. (Y/N)? ";
+                goto choices;
+            }
+        }
+
+        else
+        {
+            cout << "An error occured. Error code: " << ec.value() << ", Error msg: " << ec.message() <<endl;
+        }
+    }
+    else
+    {
+        cout << "Directory not found." << endl;
+    }
+
+    cout << "Wipe another directory (Y/N)? ";
+    cin >> choice;
+    if (choice == 'y' || choice == 'Y')
+    {
+        goto start;
+    }
+    else
+    {
+        return 1;
+    }
 }

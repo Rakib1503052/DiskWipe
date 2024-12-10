@@ -7,9 +7,11 @@ int main()
 start:
     system("cls");
     string dir;
-    cout << "Enter directory (eg: \'C:/\'): ";
-    cin >> dir;
-    dir = dir[dir.size()-1] == '/' ? dir : dir+"/";
+    char dLetter;
+    cout << "Enter drive letter (eg: \'C\' or \'c\'): ";
+    cin >> dLetter;
+    dir.push_back(dLetter);
+    dir += ":/";
 
     char choice;
     unsigned int passNo;

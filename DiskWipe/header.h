@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-#define CLUSTERSIZE 65536
+#define CLUSTERSIZE 4096
 
 bool space_inquiry(const std::string&, std::error_code&, std::filesystem::space_info&);
 std::string filemake(const std::string&, const size_t&, const unsigned char&, const int&);

@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1733758818 source:f:\repositories\diskwipe\diskwipe\filefunc.cpp
+	"header.h"
+
+1733760415 f:\repositories\diskwipe\diskwipe\header.h
+	<filesystem>
+	<system_error>
+	<string>
+	<cstring>
+	<map>
+	<stdio.h>
+	<stdlib.h>
+	<iostream>
+
+1733758818 source:f:\repositories\diskwipe\diskwipe\inquiry.cpp
+	"header.h"
+
+1733760215 source:f:\repositories\diskwipe\diskwipe\util.cpp
+	"header.h"
+
+1733760065 source:f:\repositories\diskwipe\diskwipe\diskwipe.cpp
+	"header.h"
+
